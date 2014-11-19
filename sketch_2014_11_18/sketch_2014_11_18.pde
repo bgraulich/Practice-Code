@@ -2,14 +2,16 @@ float x, y, vx, vy, ax, ay, sz;
 
 void setup() {
   size(500, 500);
-  x=;
-  y=;
+  x=0;
+  y=0;
   sz=50;
+  colorMode(HSB,360,100,100,100);
 }
 
 void draw() {
-  ax=random(.1, -.1);
-  ay=random(.1, -.1);
+  background(random(255),random(255),random(255));
+  ax=random(-.5, .5);
+  ay=random(-.5, .5);
   vx+=ax;
   vy+=ay;
   x+=vx;
@@ -27,5 +29,9 @@ void draw() {
   }
   if (y+sz/2<0){
     y=height+sz/2;
+  }
+  if (mousePressed){
+    ax=random(-.5,.5);
+    ay=random(-.5,.5);
   }
 }
