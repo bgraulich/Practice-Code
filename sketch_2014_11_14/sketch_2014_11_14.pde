@@ -5,9 +5,9 @@ void setup() {
   size(500, 500);
   x=width/2;
   y=0;
-  vx=.1;
+  vx=0;
   vy=.1;
-  ax=.1;
+  ax=0;
   ay=.1;
   sz=50;
 }
@@ -22,16 +22,6 @@ void draw() {
   if(y+sz/2>=height){
     y=height-sz/2;
     vy*=-1;
-  }
-  if(x+sz/2>=width){
-    x=width-sz/2;
-    vx=-.1;
-    vx*=-1;
-  }
-  if(x-sz/2<=0){
-    x=sz/2;
-    vx=.1;
-    vx*=-1;
   }
 }
 
