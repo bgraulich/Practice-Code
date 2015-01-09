@@ -1,30 +1,33 @@
 class Rocketship {
+  //Declare the location, velocity, size, and image for the rocketship
   PVector loc, vel;
   float sz;
+  PImage rocketship;
+  //Declare the variable for the angle
+  float theta;
   Rocketship() {
-    loc = new PVector(width/2, height/2);
-    vel = PVector.random2D();
-    sz = 10;
+    //Initialize the location, velocity, size, and image for the rocketship
+    loc = new PVector(mouseX, mouseY);
+    sz = 100;
+    rocketship = loadImage("rocketship.png");
+    //Change rectangle mode to rotate around the center
+    imageMode(CENTER);
+    //Initialize the variable for the angle
   }  
   void display() {
-    ellipse(loc.x, loc.y, sz, sz);
+    //Set rocketship location to the mouse location
+    loc.set(mouseX, mouseY);
   }
-  void move() {
-    loc.add(vel);
-  }
-  void wraparound() {
-    if (loc.x > width + sz/2) {
-      loc.x = -sz/2;
-    }
-    if (loc.y > height + sz/2) {
-      loc.y = -sz/2;
-    }
-    if (loc.x < -sz/2) {
-      loc.x = width + sz/2;
-    }
-    if (loc.y < -sz/2) {
-      loc.y = height + sz/2;
-    }
+
+  void update() {
+    vel = new PVector(mouseX-pmouseX, mouseY-pmouseY);
+    theta = vel.heading();
+    pushMatrix();
+    translate(loc.x, loc.y);
+    rotate(theta);
+    //Display the image
+    image(rocketship, 0, 0, sz, sz);
+    popMatrix();
   }
 }
 
