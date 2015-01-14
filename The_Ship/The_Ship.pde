@@ -19,53 +19,49 @@ class Rocketship {
   }  
   void display() {
     //Set rocketship location to the mouse location
-    loc.set(width/2, height/2);
-  }
-
-  void update() {
-    vel = new PVector(mouseX-pmouseX, mouseY-pmouseY);
-    theta = vel.heading();
     pushMatrix();
     translate(loc.x, loc.y);
     rotate(theta);
-    //Display the image
     image(rocketship, 0, 0, sz, sz);
     popMatrix();
+  }
+
+  void update() {
+    if (keyPressed) {
+      if (keyCode == LEFT) {
+        theta-=radians(5);
+      } else if (keyCode == RIGHT) {
+        theta+=radians(5);
+      }
+    }
   }
 }
 class Fire {
   PVector loc, vel;
   float sz = 10;
   int bullet = 1;
-  float theta;
-
+  Fire(Rocketship r) {
+    loc = r.loc.get();
+    vel = PVector.fromAngle(r.theta);
+  }
   void display() {
     ellipse(loc.x, loc.y, sz, sz);
-    loc.set(width/2, height/2);
-  }
-  void update() {
-    vel = PVector.random2D();
-    theta = vel.heading();
-    pushMatrix();
-    translate(loc.x, loc.y);
-    rotate(theta);
-    popMatrix();
+    loc.add(vel);
   }
 }
 void setup() {
   size(500, 500);
   //Initialize a new rocketship and a new fireball
   r = new Rocketship();
-  f = new Fire();
+  f = new Fire(r);
 }
 void draw() {
   background(255);
-  bullets.add(new Fire());
+  bullets.add(new Fire(r));
   for (int i = 0; i < bullets.size (); i++) {
     f = bullets.get(i);
     if (mousePressed) {
-      f.diplay();
-      f.update();
+      f.display();
     }
   }
   r.display();
